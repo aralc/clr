@@ -117,12 +117,12 @@ read opc2
 				echo "***************************************************************************" 
 				echo "* - Alerta* - Numero de usuarios ou de senhas diferente                   * "
 				echo "* O numero de usuarios e senhas devem ser iguais, verifique os arquivos de * "
-				echo "* entrada e execute o script novamtente - Ass: Joker 			* "
+				echo "* entrada e execute o script novamtente -  			* "
 				echo "***************************************************************************"
 			fi
 		fi
 	fi
-echo "FIM DA TRETA"
+echo "FIM"
 
 	
 
