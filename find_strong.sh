@@ -22,9 +22,27 @@ busca_f()
 		echo -e "\033[4;31m $tt \033[0m | \033[4;32m $i \033[0m"
 		barra_c=$(echo barras: $i | fgrep -o / | wc -l)
 		barra_c=$(expr 1 + $barra_c)
-		var=$(echo $i | cut -d "/" -f 1-$barra_c)
-		cp -r $var bkp$data
-		rm -rf $var
+		if [ $tt -gt $t ]
+			then
+				
+			var=$(echo $i | cut -d "/" -f 1-$barra_c)
+			echo $var
+			var2=$(echo $i | cut -d "/" -f $barra_c)
+			echo $var2
+			barra_o=$(expr $barra_c - 1)
+			var_origem=$(echo $i | cut -d "/" -f 1-$barra_o)
+			
+			count=$(expr $count + 1)
+			cd $var_origem
+			mv $var2 /tmp/bkp$data
+			tar -cvzf /tmp/bkp$data/$var2.$count.tar.bz2 /tmp/bkp$data
+	                echo -e "Arquivo ou Pasta ; $var2 ; estava em ; $var_origem ; com o nome destino ; $var2.$count.tar.bz2  " >> /tmp/bkp$data/leiame.txt
+
+			cd /tmp/bkp$data
+			rm -rf $var2
+			#rm -rf $var
+			
+		fi
 				
 		read ggg
 		
@@ -36,7 +54,10 @@ busca_f()
 echo -e "\033[3;31m Ola usuário $(whoami) \033[0m"
 echo -e "\033[3;32m *#*#*#*#*#*#*#*#*#* \033[0m"
 echo -e "\033[3;33m Este script foi criado para efetuar buscas de arquivos,
-		 e pastas utilizando o parâmetro de tamanho ! \033[0m"
+		 e pastas utilizando o parâmetro de tamanho ! 
+		- O script ira pegar os arquivos que estao excedendo o tamanho 
+		e ira mover para pasta criada com o nome de bkp_data no diretorio tmp 
+		apos isto os arquivos serao compactados \033[0m"
 echo -e "\033[3;34m Qual o tamanho para limite o limite da busca ? \033[0m" 
 read t
 echo -e "\033[3;35m Informe se deseja buscar arquivos, pastas ou ambos 
@@ -67,9 +88,12 @@ echo -e "\033[3;36m os parâmetros
 	 tipo : $e  
 	 busca : $a 
 	 local : $l \033[0m "
-data=$(date +"%d"."%m"."$y"_"%H":"%M")
+data=$(date +"%d"."%m"."$y"."%H":"%M")
 echo $data
-	mkdir bkp$data
+	mkdir /tmp/bkp$data
+	touch /tmp/bkp$data/leiame.txt
+	echo " " >> /tmp/bkp$data/leiame.txt
+	echo "VOCE PODE IMPORTAR PARA O EXCEL"
 case $e in 
 	f) 
 	echo -e file 
